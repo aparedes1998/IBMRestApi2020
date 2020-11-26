@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/aparedes1998/IBMRestApi2020#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "ibm-watson": "^5.7.0"
+    "ibm-watson": "^5.7.0",
+    "ibm_db": "^2.7.1"
   }
 }

@@ -1,7 +1,7 @@
 const AssistantV2 = require("ibm-watson/assistant/v2");
 const { IamAuthenticator } = require("ibm-watson/auth");
 
-const watsonAssistant = (message) => {
+const watsonAssistant = async (message) => {
   const assistant = new AssistantV2({
     version: "2020-04-01",
     authenticator: new IamAuthenticator({
@@ -11,7 +11,7 @@ const watsonAssistant = (message) => {
       "https://api.us-south.assistant.watson.cloud.ibm.com/instances/2d2bb9c1-9023-4a50-816e-7067c605f171",
   });
 
-  assistant
+  return assistant
     .messageStateless({
       assistantId: "919afab7-3294-4d34-8c57-476c00ef7803",
       input: {
@@ -27,19 +27,21 @@ const watsonAssistant = (message) => {
         console.log(classification);
         console.log(confidence);
         if (confidence > 0.75) {
-          console.log("Almacenar en base de datos");
+          return classification;
         } else {
-          console.log("Dejar sin clasificar");
+          return undefined;
         }
       } else {
         console.log(
           "Dejar sin clasificar (el asistente no pudo decidir entre ninguna de las 3 intenciones)"
         );
+        return undefined;
       }
     })
     .catch((err) => {
       console.log(err);
     });
 };
-
-watsonAssistant("tuve un problema con el adelanto");
+module.exports = {
+  watsonAssistant,
+};
