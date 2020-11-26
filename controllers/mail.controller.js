@@ -1,11 +1,9 @@
 const {
   isValidMessage,
   parseMessage,
-} = require("../utils/messageValidator.js");
-
-const { sendQuery } = require("../utils/databaseHandler.js");
-
-const { watsonAssistant } = require("../utils/watsonHandler.js");
+  sendQuery,
+  watsonAssistant,
+} = require("../utils/index.js");
 
 const classification = {
   CambioDeClave: 1,
@@ -32,10 +30,12 @@ const classify = async (req, res) => {
       console.log(classification);
       saveMessage(message, classification);
       res.status(200);
-      res.send("Data recieved and processed");
+      res.send("Data recibida y procesada");
     } else {
       res.status(400);
-      res.send("There was an error trying to clasify your msg");
+      res.send(
+        "Hubo un error tratando de clasificar su mensaje, ¡Intente ser más claro!"
+      );
     }
   } catch (error) {
     res.status(400);

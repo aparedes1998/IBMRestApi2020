@@ -1,6 +1,14 @@
 const AssistantV2 = require("ibm-watson/assistant/v2");
 const { IamAuthenticator } = require("ibm-watson/auth");
 
+/**
+ * Ties message to one of three intentions:
+ * 1 - Password change (#CambioDeClave)
+ * 2 - Pay advance (#AdelantoDeSueldo)
+ * 3 - Failed Transfer (#TransferenciaErronea)
+ * If it can't tie it with any of the above (0 confidence in any), it returns undefined
+ * @param {string} message
+ */
 const watsonAssistant = async (message) => {
   const assistant = new AssistantV2({
     version: "2020-04-01",
@@ -24,17 +32,13 @@ const watsonAssistant = async (message) => {
       if (result.length > 0) {
         const classification = result[0].intent;
         const confidence = result[0].confidence;
-        console.log(classification);
-        console.log(confidence);
         if (confidence > 0.75) {
+          // if the assistant has a 75% certainty of an intent
           return classification;
         } else {
           return undefined;
         }
       } else {
-        console.log(
-          "Dejar sin clasificar (el asistente no pudo decidir entre ninguna de las 3 intenciones)"
-        );
         return undefined;
       }
     })
@@ -42,6 +46,4 @@ const watsonAssistant = async (message) => {
       console.log(err);
     });
 };
-module.exports = {
-  watsonAssistant,
-};
+module.exports = watsonAssistant;
