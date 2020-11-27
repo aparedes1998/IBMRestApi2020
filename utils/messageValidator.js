@@ -72,6 +72,17 @@ const isNumerical = (data) => {
 };
 
 /**
+ * Checks wether the introduced data is indeed a boolean
+ * @param {Boolean} data
+ */
+const isBoolean = (data) => {
+  if (typeof data === "boolean") {
+    return true;
+  }
+  throw new Error("El parámetro identified customer debe ser un booleano");
+};
+
+/**
  * Checks if a string cointains any white space
  * @param {string} text
  */
@@ -109,9 +120,13 @@ const parseMessage = (data) => {
 const isValidMessage = (body) => {
   MESSAGE_PARAMETERS.forEach((parameter) => {
     if (!body[parameter]) {
-      throw new Error(
-        `El parámetro: ${parameter} no fue encontrado en el cuerpo del mensaje.`
-      );
+      if (parameter === "identified customer" && body[parameter] === false) {
+        return;
+      } else {
+        throw new Error(
+          `El parámetro: ${parameter} no fue encontrado en el cuerpo del mensaje.`
+        );
+      }
     }
   });
   return (
@@ -119,6 +134,7 @@ const isValidMessage = (body) => {
     isValidType("TOPIC", body["topic"]) &&
     isValidType("PID_TYPE", body["pid type"]) &&
     isNumerical(body["pid number"]) &&
+    isBoolean(body["identified customer"]) &&
     isValidEmail(body["email"]) &&
     containsWhiteSpace(body["access from"])
   );
