@@ -20,13 +20,12 @@ const watsonAssistant = async (message) => {
     authenticator: new IamAuthenticator({
       apikey: process.env.WATSON_API_KEY,
     }),
-    serviceUrl:
-      "https://api.us-south.assistant.watson.cloud.ibm.com/instances/2d2bb9c1-9023-4a50-816e-7067c605f171",
+    serviceUrl: process.env.WATSON_SERVICE_URL,
   });
 
   return assistant
     .messageStateless({
-      assistantId: "919afab7-3294-4d34-8c57-476c00ef7803",
+      assistantId: process.env.WATSON_ASSISTANT_ID,
       input: {
         message_type: "text",
         text: message,
