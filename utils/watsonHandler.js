@@ -1,5 +1,10 @@
 const AssistantV2 = require("ibm-watson/assistant/v2");
 const { IamAuthenticator } = require("ibm-watson/auth");
+const dotenv = require("dotenv");
+
+// Configuring the env variables.
+const path = require("path");
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 /**
  * Ties message to one of three intentions:
@@ -13,7 +18,7 @@ const watsonAssistant = async (message) => {
   const assistant = new AssistantV2({
     version: "2020-04-01",
     authenticator: new IamAuthenticator({
-      apikey: "yHdA5bbBgPtyW2fie2QkTaAd8mUzEOk-9WFhvPV8TKPO",
+      apikey: process.env.WATSON_API_KEY,
     }),
     serviceUrl:
       "https://api.us-south.assistant.watson.cloud.ibm.com/instances/2d2bb9c1-9023-4a50-816e-7067c605f171",

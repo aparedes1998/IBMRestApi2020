@@ -76,7 +76,7 @@ const isNumerical = (data) => {
  * @param {string} text
  */
 const containsWhiteSpace = (text) => {
-  if (text.indexOf(" ") === 0) {
+  if (text.indexOf(" ") === -1) {
     return true;
   }
   throw new Error(

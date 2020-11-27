@@ -2,8 +2,11 @@
   "name": "ibmrestapi2020",
   "version": "1.0.0",
   "description": "Prueba tecnica 2020",
-  "main": "index.js",
+  "engines": {
+    "node": "10.*"
+  },
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

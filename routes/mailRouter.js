@@ -1,3 +1,6 @@
+/**
+ * Router for the /mail subdomain
+ */
 const { classify } = require("../controllers/mail.controller.js");
 
 const express = require("express");
